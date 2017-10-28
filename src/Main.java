@@ -1,15 +1,42 @@
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintStream;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
 
 import javax.swing.JFrame;
 
+import display.NeuralNetworkView;
+import neural.Matrix;
+import neural.NetworkTrainer;
+import neural.NeuralNetwork;
+
 
 public class Main {
 
-	public static void main(String[] args) {
-		NeuralNetwork net = new NeuralNetwork(1, 5, 10, 7, 3, 1);
+	public static void main(String[] args) throws IOException {
+		NeuralNetwork net = new NeuralNetwork(1, 5, 1);
+		NetworkTrainer t = NetworkTrainer.sinNetworkTrainer(-6, 6, 1000, net);
+		t.speed = 0.002;
+		File f = new File("C:/Users/Valdemar/Desktop/output.txt");
+		f.createNewFile();
+		while(true) {
+			t.trainForMS(1000);
+			PrintStream ps = new PrintStream(new FileOutputStream(f));
+			for(int i = 0; i < 1000; i++) {
+				double x = i*(6 - -6)/1000.0 -6;
+				net.input[0] = x;
+				net.propagate();
+				ps.print(net.input[0] + ", " + net.getOutput(0) + System.lineSeparator());
+			}
+			ps.close();
+		}
+		//startCommandPrompt(net);
+	}
+
+	/*
+	private static void startCommandPrompt(NeuralNetwork net) {
 		Scanner scan = new Scanner(System.in);
 		CommandPrompt cmd = new CommandPrompt();
 		
@@ -91,9 +118,11 @@ public class Main {
 		}, "<dBias l n> computes the derivative of the network output w.r.t the specified bias");
 		
 		cmd.addCommand("train", s -> {
-			List<String> tokens = cmd.getTokens(s);
-			File file = new File(tokens.get(1));
-			new NetworkTrainer(net, file).train();
+			NetworkTrainer t;
+			t = NetworkTrainer.sinNetworkTrainer(-6, 6, 100, net);
+			System.out.println("Current cost: " + t.cost());
+			t.trainForMS(600000);
+			System.out.println("Cost after training: " + t.cost());
 		}, "<train f> Trains the neural network with the learning set in the file specified.");
 		
 		cmd.setDefaultCommand(s -> {
@@ -102,4 +131,5 @@ public class Main {
 		cmd.run(scan);
 		System.exit(0);
 	}
+	*/
 }

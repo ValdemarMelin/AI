@@ -1,8 +1,12 @@
+package display;
+
 import java.awt.Color;
 import java.awt.Graphics;
 
 import javax.swing.JPanel;
 import javax.swing.Timer;
+
+import neural.NeuralNetwork;
 
 public class NeuralNetworkView extends JPanel {
 	private static final long serialVersionUID = 1L;

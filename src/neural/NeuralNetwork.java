@@ -1,4 +1,4 @@
-
+package neural;
 
 public class NeuralNetwork {
 	
@@ -41,13 +41,13 @@ public class NeuralNetwork {
 	}
 	
 	private final double randomizeBias() {
-		return 1;
-		//return Math.random() - 0.5;
+		//return 1;
+		return Math.random() - 0.5;
 	}
 	
 	private final double randomizeWeight() {
-		return 1; 
-		//return Math.random() - 0.5;
+		//return 1; 
+		return Math.random() - 0.5;
 	}
 	
 	void computeJacobiansFromLayer(int l) {
@@ -61,7 +61,9 @@ public class NeuralNetwork {
 	}
 	
 	public double[] derivativeWeight(int l, int n, int w) {
-		double dNdw = output[l-1][w]*df_dx(activation[l][n]);
+		double dNdw;
+		if(l == 0) dNdw = input[w]*df_dx(activation[l][n]);
+		else dNdw = output[l-1][w]*df_dx(activation[l][n]);
 		double[] result = new double[getLayerSize(getLayerCount()-1)];
 		if(l == getLayerCount() - 1) {
 			for(int i = 0; i < result.length; i++) {
@@ -174,14 +176,14 @@ public class NeuralNetwork {
 	// STATIC METHODS
 	
 	private static final double f(double x) {
-		//return 1 / (1 + Math.exp(-x));
-		return x*x;
+		return 1 / (1 + Math.exp(-x));
+		//return x*x;
 	}
 	
 	private static final double df_dx(double x) {
-		//double fx = f(x);
-		//return fx*(1-fx);
-		return 2*x;
+		double fx = f(x);
+		return fx*(1-fx);
+		//return 2*x;
 	}
 	
 }
