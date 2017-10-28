@@ -96,7 +96,9 @@ public class Main {
 			new NetworkTrainer(net, file).train();
 		}, "<train f> Trains the neural network with the learning set in the file specified.");
 		
-		
+		cmd.setDefaultCommand(s -> {
+			System.out.println("Unknown command. Try \"help\" for help, or \"exit\" for exit.");
+		});
 		cmd.run(scan);
 		System.exit(0);
 	}

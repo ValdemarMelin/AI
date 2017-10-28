@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 
 public class CommandPrompt {
 	private final Map<String, Command> commands;
+	private Command defaultCommand;
 	private boolean shouldStop;
 	
 	public CommandPrompt() {
@@ -31,12 +32,10 @@ public class CommandPrompt {
 		while(!shouldStop) {
 			String cmd = scan.nextLine();
 			String cmdName = cmd.split(" ")[0].toLowerCase();
-			if(commands.containsKey(cmdName)) {
+			if(commands.containsKey(cmdName))
 				commands.get(cmdName).function.run(cmd);
-			}
-			else {
-				
-			}
+			else if(defaultCommand != null)
+					defaultCommand.function.run(cmd);
 		}
 	}
 	
@@ -60,6 +59,18 @@ public class CommandPrompt {
 		return commands;
 	}
 	
+	public Command getDefaultCommand() {
+		return defaultCommand;
+	}
+
+	public void setDefaultCommand(Command defaultCommand) {
+		this.defaultCommand = defaultCommand;
+	}
+	
+	public void setDefaultCommand(CommandFunction f) {
+		setDefaultCommand(new Command("", f));
+	}
+
 	@FunctionalInterface
 	public static interface CommandFunction {
 		void run(String line);

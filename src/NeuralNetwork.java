@@ -41,13 +41,13 @@ public class NeuralNetwork {
 	}
 	
 	private final double randomizeBias() {
-		//return 1;
-		return Math.random() - 0.5;
+		return 1;
+		//return Math.random() - 0.5;
 	}
 	
 	private final double randomizeWeight() {
-		//return 1; 
-		return Math.random() - 0.5;
+		return 1; 
+		//return Math.random() - 0.5;
 	}
 	
 	void computeJacobiansFromLayer(int l) {
@@ -174,14 +174,14 @@ public class NeuralNetwork {
 	// STATIC METHODS
 	
 	private static final double f(double x) {
-		return 1 / (1 + Math.exp(-x));
-		//return x*x;
+		//return 1 / (1 + Math.exp(-x));
+		return x*x;
 	}
 	
 	private static final double df_dx(double x) {
-		double fx = f(x);
-		return fx*(1-fx);
-		//return 2*x;
+		//double fx = f(x);
+		//return fx*(1-fx);
+		return 2*x;
 	}
 	
 }
