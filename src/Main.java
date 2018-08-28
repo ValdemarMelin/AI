@@ -5,13 +5,14 @@ import java.util.Scanner;
 
 import javax.swing.JFrame;
 
+
 public class Main {
-	// This is the main method
+
 	public static void main(String[] args) {
 		NeuralNetwork net = new NeuralNetwork(1, 5, 10, 7, 3, 1);
 		Scanner scan = new Scanner(System.in);
 		CommandPrompt cmd = new CommandPrompt();
-		// hello my friend	
+		
 		cmd.addCommand("help", (s) -> {
 			for(CommandPrompt.Command c: cmd.getCommands().values()) {
 				System.out.println(c.name + ": " + c.description);
